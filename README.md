@@ -4,7 +4,7 @@ This webapp predicts 8 different types of Skin Cancer out of a picture or a live
 ## Technological Stack
 - ### Model development
 > Python, Tensorflow & Keras
-- ###Training Platform
+- ### Training Platform
 > Google Colab
 - ### Backend Server
 > Node.js
