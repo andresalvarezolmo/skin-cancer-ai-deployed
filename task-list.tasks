@@ -1,0 +1,18 @@
+# Frontend:
+☐ Create react app
+☐ Capture video form camera
+☐ Send video via post request to the Backend
+
+
+# Backend:
+☐ Create node server
+☐ Create routes
+☐ Deploy AI
+☐ Receive incoming data from Frontend
+☐ Process data 
+☐ Predict based on input
+☐ Send result back to Frontend
+
+# Deploy
+☐ Containerize each server with Docker 
+
