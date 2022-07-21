@@ -1,17 +1,25 @@
-const express = require('express')
-const app = express()
+const express = require("express");
+const { createServer } = require("http");
+const { Server } = require("socket.io");
 
-const diagnoseRouter = require('./routes/diagnose');
-
+const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, 
+  { cors:{
+    origin: "*"
+    } 
+});
 const port = process.env.PORT || 5000;
 
-app.get('/', (req, res) => {
-  res.send('Hey!')
-})
+io.on("connection", (socket) => {
+  console.log(`Connected with session ${socket.id}`);
 
-app.use('/diagnose', diagnoseRouter);
+  socket.on("ping", () => {
+    socket.emit("pong");
+  })
+
+});
 
 
-app.listen(port, () => {
-  console.log(`Backend running on port ${port}`)
-})
+
+io.listen(port, () => `Sitting at localhost:${port}`);
