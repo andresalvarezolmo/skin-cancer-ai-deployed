@@ -18,6 +18,10 @@ io.on("connection", (socket) => {
     socket.emit("pong");
   })
 
+  socket.on("disconnect", function (){
+    console.log("terminate socket")
+    socket.disconnect(0);
+});
 });
 
 

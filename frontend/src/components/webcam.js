@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import io from 'socket.io-client';
+
 
 class Webcam extends Component {
     constructor(props) {
@@ -9,7 +11,8 @@ class Webcam extends Component {
             cameras: [],
             cameraIndex: 1,
             playing: false,
-            prueba: "W"
+            prueba: "W",
+            socket: null
         }
     }
 
@@ -33,19 +36,10 @@ class Webcam extends Component {
         })
     }
 
-    //Async switch camera function, waits for the state change before restarting the video, otherwise sometimes the change does not get applied  
-    switchCamera = async () => {
-        await this.setState({
-            cameraIndex: (this.state.cameraIndex + 1) % (this.state.cameras.length)
-        }, () => { console.log("Camera changed", this.state.cameraIndex) })
-        this.stopVideo()
-        this.startVideo()
-
-    }
-
-    startVideo = () => {
+    startVideo = () => { 
         this.setState({
-            playing: true
+            playing: true,
+            socket: io("ws://localhost:5000")
         });
         navigator.getUserMedia(
             {
@@ -62,13 +56,26 @@ class Webcam extends Component {
         );        
     };
 
-    stopVideo = () => {
+    stopVideo = async () => {
+        await this.state.socket.disconnect()
         this.setState({
-            playing: false
+            playing: false,
+            socket: null
         });
         let video = document.getElementsByClassName('app__videoFeed')[0];
         video.srcObject.getTracks()[0].stop();
     };
+
+
+    //Async switch camera function, waits for the state change before restarting the video, otherwise sometimes the change does not get applied  
+    switchCamera = async () => {
+        await this.setState({
+            cameraIndex: (this.state.cameraIndex + 1) % (this.state.cameras.length)
+        }, () => { console.log("Camera changed", this.state.cameraIndex) })
+        this.stopVideo()
+        this.startVideo()
+
+    }
 
     render() {
         return (
