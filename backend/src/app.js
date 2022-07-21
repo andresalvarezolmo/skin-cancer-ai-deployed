@@ -3,10 +3,10 @@ const app = express()
 
 const diagnoseRouter = require('./routes/diagnose');
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 app.get('/', (req, res) => {
-  res.send('Hola chonky girl!')
+  res.send('Hey!')
 })
 
 app.use('/diagnose', diagnoseRouter);
