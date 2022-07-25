@@ -15,4 +15,4 @@
 
 # Deploy
 ☐ Containerize each server with Docker 
-
+☐ Create a scheduler that only loads the ml model when the server is started
